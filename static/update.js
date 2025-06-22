@@ -1,22 +1,25 @@
-function updateProd(el) {
-    product_id = el.value
-    fetch('/in_stock/' + product_id, {
-        method: 'patch',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'in_stock': el.checked})
-    })
-    console.log(product_id)
-}
-
-function addProduct() {
-    let prodName = document.getElementById('prod_name').value
-    let price = document.getElementById('price').value
+function addEntry() {
+    let steps = document.getElementById('steps').value
+    let date = document.getElementById('date').value
     fetch('/add', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'prod_name': prodName,
-                             'price': price,
-                             'in_stock': true})
+        body: JSON.stringify({'steps': steps,
+                             'date': date})
+    }).then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
     })
-//    console.log("Add")
+}
+
+function clearEntries() {
+    fetch('/clear', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+    }).then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    })
 }
