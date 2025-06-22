@@ -1,35 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+
 <html>
 <head>
-    <title>Best store!</title>
+    <title>Step Counter</title>
     <script type="text/javascript" src="/static/update.js"></script>
-    <link href="static/store.css" rel="stylesheet">
+    <link href="/static/store.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Furniture store:</h1>
-    <h3>Add new product:</h3>
+    <h1>Счетчик шагов</h1>
+    <h3>Добавить шаги:</h3>
     <form>
         <div>
-            <input type="text" name="prod_name" id="prod_name">
-            <label for="prod_name">Product name</label>
+            <input type="number" name="steps" id="steps" min="0">
+            <label for="steps">Число шагов</label>
         </div>
         <div>
-            <input type="number" name="price" id="price">
-            <label for="price">Price (rub.)</label>
+            <input type="date" name="date" id="date">
+            <label for="date">Дата</label>
         </div>
-        <button onClick="addProduct()">Add</button>
+        <button type="button" onClick="addEntry()">Отправить</button>
     </form>
     <ul>
-        {% for product in products_list %}
+        {% for entry in entries %}
         <li>
             <div>
-                <div>{{ product['prod_name'] }}</div>
-                <div>{{ product['price'] }} rub.</div>
-                <input value="{{product['id']}}" onChange="updateProd(this)" name="in_stock" type="checkbox" {% if product.in_stock %} checked {% endif %}>
-                <label for="in_stock">In stock</label>
+                <div><strong>Date:</strong> {{ entry.date }}</div>
+                <div><strong>Steps:</strong> {{ entry.steps }}</div>
             </div>
         </li>
         {% endfor %}
     </ul>
+    <div class="total">Всего шагов: {{ total_steps }}</div>
+    <button onClick="clearEntries()">Очистить</button>
 </body>
 </html>
